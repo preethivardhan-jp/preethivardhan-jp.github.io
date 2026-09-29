@@ -456,7 +456,7 @@
   	  align-self: flex-end;
 
   	  /* Black & white by default */
-  	  filter: grayscale(65%);
+  	  filter: grayscale(75%);
 
   	  /* Smooth colour transition */
   	  transition:
