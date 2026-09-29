@@ -1,66 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
+
+    /* =====================================================
+       PORTRAIT — MOBILE SCROLL COLOUR EFFECT
+    ===================================================== */
 
     const portrait = document.querySelector(".portrait");
 
-    if (!portrait) return;
-
-    /*
-     * Mobile portrait scroll interaction
-     *
-     * The portrait becomes more colourful as it
-     * approaches the centre of the viewport.
-     */
-
     function updatePortraitOnScroll() {
 
-        const rect = portrait.getBoundingClientRect();
+        if (!portrait) return;
 
+        const rect = portrait.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
 
-        // Centre point of the portrait
-        const portraitCenter = rect.top + (rect.height / 2);
+        const portraitCenter =
+            rect.top + (rect.height / 2);
 
-        // Centre point of the screen
-        const viewportCenter = viewportHeight / 2;
+        const viewportCenter =
+            viewportHeight / 2;
 
-        // Distance between portrait centre and viewport centre
-        const distance = Math.abs(
-            portraitCenter - viewportCenter
-        );
+        const distance =
+            Math.abs(portraitCenter - viewportCenter);
 
-        /*
-         * Distance at which the effect starts.
-         * Increase this value for a wider transition zone.
-         */
-        const transitionDistance = viewportHeight * 0.45;
+        const transitionDistance =
+            viewportHeight * 0.45;
 
-        /*
-         * Convert distance into a 0–1 value.
-         *
-         * 1 = portrait is at viewport centre
-         * 0 = portrait is far from viewport centre
-         */
         let progress =
             1 - (distance / transitionDistance);
 
-        progress = Math.max(0, Math.min(1, progress));
+        progress = Math.max(
+            0,
+            Math.min(1, progress)
+        );
 
-        /*
-         * Convert progress into grayscale.
-         *
-         * 1   = completely grayscale
-         * 0   = full colour
-         */
-        const grayscale = 100 - (progress * 100);
+        const grayscale =
+            100 - (progress * 100);
 
         portrait.style.filter =
             `grayscale(${grayscale}%)`;
     }
 
-    /*
-     * Run only on touch/mobile devices.
-     */
-    if (window.matchMedia("(hover: none)").matches) {
+
+    if (
+        portrait &&
+        window.matchMedia("(hover: none)").matches
+    ) {
 
         window.addEventListener(
             "scroll",
@@ -68,7 +52,152 @@ document.addEventListener("DOMContentLoaded", () => {
             { passive: true }
         );
 
+        window.addEventListener(
+            "resize",
+            updatePortraitOnScroll
+        );
+
         updatePortraitOnScroll();
     }
+
+
+    /* =====================================================
+       MOBILE NAVIGATION DRAWER
+    ===================================================== */
+
+    const menuToggle =
+        document.querySelector(".menu-toggle");
+
+    const mobileMenu =
+        document.querySelector(".mobile-menu");
+
+    const menuClose =
+        document.querySelector(".mobile-menu-close");
+
+    const mobileLinks =
+        document.querySelectorAll(".mobile-nav a");
+
+
+    /* Debug check */
+
+    console.log("Menu toggle:", menuToggle);
+    console.log("Mobile menu:", mobileMenu);
+
+
+    /* If either element is missing, stop */
+
+    if (!menuToggle || !mobileMenu) {
+        console.error(
+            "Mobile menu elements were not found."
+        );
+        return;
+    }
+
+
+    /* =====================================================
+       OPEN MENU
+    ===================================================== */
+
+    function openMenu() {
+
+        console.log("Opening mobile menu");
+
+        mobileMenu.classList.add("is-open");
+
+        mobileMenu.setAttribute(
+            "aria-hidden",
+            "false"
+        );
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "true"
+        );
+
+        document.body.classList.add(
+            "menu-open"
+        );
+    }
+
+
+    /* =====================================================
+       CLOSE MENU
+    ===================================================== */
+
+    function closeMenu() {
+
+        console.log("Closing mobile menu");
+
+        mobileMenu.classList.remove(
+            "is-open"
+        );
+
+        mobileMenu.setAttribute(
+            "aria-hidden",
+            "true"
+        );
+
+        menuToggle.setAttribute(
+            "aria-expanded",
+            "false"
+        );
+
+        document.body.classList.remove(
+            "menu-open"
+        );
+    }
+
+
+    /* =====================================================
+       HAMBURGER BUTTON
+    ===================================================== */
+
+    menuToggle.addEventListener(
+        "click",
+        openMenu
+    );
+
+
+    /* =====================================================
+       CLOSE BUTTON
+    ===================================================== */
+
+    if (menuClose) {
+
+        menuClose.addEventListener(
+            "click",
+            closeMenu
+        );
+    }
+
+
+    /* =====================================================
+       CLOSE WHEN NAVIGATION LINK IS CLICKED
+    ===================================================== */
+
+    mobileLinks.forEach(function (link) {
+
+        link.addEventListener(
+            "click",
+            closeMenu
+        );
+
+    });
+
+
+    /* =====================================================
+       ESC KEY
+    ===================================================== */
+
+    document.addEventListener(
+        "keydown",
+        function (event) {
+
+            if (event.key === "Escape") {
+                closeMenu();
+            }
+
+        }
+    );
 
 });
