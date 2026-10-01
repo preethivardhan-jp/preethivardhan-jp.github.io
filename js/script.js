@@ -84,21 +84,13 @@ document.addEventListener("DOMContentLoaded", function () {
     console.log("Mobile menu:", mobileMenu);
 
 
-    /* If either element is missing, stop */
-
-    if (!menuToggle || !mobileMenu) {
-        console.error(
-            "Mobile menu elements were not found."
-        );
-        return;
-    }
-
-
     /* =====================================================
        OPEN MENU
     ===================================================== */
 
     function openMenu() {
+
+        if (!menuToggle || !mobileMenu) return;
 
         console.log("Opening mobile menu");
 
@@ -124,13 +116,13 @@ document.addEventListener("DOMContentLoaded", function () {
        CLOSE MENU
     ===================================================== */
 
-    function closeMenu() {
+    function closeMenu(returnFocus = true) {
+
+        if (!menuToggle || !mobileMenu) return;
 
         console.log("Closing mobile menu");
 
-        mobileMenu.classList.remove(
-            "is-open"
-        );
+        mobileMenu.classList.remove("is-open");
 
         mobileMenu.setAttribute(
             "aria-hidden",
@@ -145,6 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
         document.body.classList.remove(
             "menu-open"
         );
+
+        /*
+         * Return focus to the hamburger only when
+         * the drawer was explicitly closed.
+         */
+        if (returnFocus) {
+            menuToggle.focus();
+        }
     }
 
 
@@ -152,10 +152,14 @@ document.addEventListener("DOMContentLoaded", function () {
        HAMBURGER BUTTON
     ===================================================== */
 
-    menuToggle.addEventListener(
-        "click",
-        openMenu
-    );
+    if (menuToggle) {
+
+        menuToggle.addEventListener(
+            "click",
+            openMenu
+        );
+
+    }
 
 
     /* =====================================================
@@ -166,8 +170,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
         menuClose.addEventListener(
             "click",
-            closeMenu
+            function () {
+                closeMenu(true);
+            }
         );
+
     }
 
 
@@ -179,7 +186,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         link.addEventListener(
             "click",
-            closeMenu
+            function () {
+
+                /*
+                 * Don't return focus to the hamburger
+                 * when navigating to another section.
+                 */
+                closeMenu(false);
+
+            }
         );
 
     });
@@ -193,11 +208,71 @@ document.addEventListener("DOMContentLoaded", function () {
         "keydown",
         function (event) {
 
-            if (event.key === "Escape") {
-                closeMenu();
+            if (
+                event.key === "Escape" &&
+                mobileMenu &&
+                mobileMenu.classList.contains("is-open")
+            ) {
+
+                closeMenu(true);
+
             }
 
         }
     );
+
+
+    /* =====================================================
+       RETURN TO TOP
+    ===================================================== */
+
+    const backToTop =
+        document.querySelector(".back-to-top");
+
+
+    if (backToTop) {
+
+        function updateBackToTop() {
+
+            if (window.scrollY > 500) {
+
+                backToTop.classList.add(
+                    "is-visible"
+                );
+
+            } else {
+
+                backToTop.classList.remove(
+                    "is-visible"
+                );
+
+            }
+
+        }
+
+
+        window.addEventListener(
+            "scroll",
+            updateBackToTop,
+            { passive: true }
+        );
+
+
+        backToTop.addEventListener(
+            "click",
+            function () {
+
+                window.scrollTo({
+                    top: 0,
+                    behavior: "smooth"
+                });
+
+            }
+        );
+
+
+        updateBackToTop();
+
+    }
 
 });
