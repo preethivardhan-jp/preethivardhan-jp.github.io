@@ -91,7 +91,7 @@ header {
 
     border-bottom: 1px solid var(--line);
 
-    background: rgba(248, 249, 250, 0.25);
+    background: rgba(248, 249, 250, 0.2);
 
     position: sticky;
     top: 0;
@@ -1012,25 +1012,22 @@ nav a.active::after {
 
 .project-number {
     font-family: "Inter Display", "Inter", sans-serif;
-
-    font-size: 15px;
+    font-size: 17px;
     font-weight: 700;
-
     color: var(--blue);
-
     margin-bottom: 30px;
 }
 
 
 .project-category {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 600;
 
     letter-spacing: 2px;
 
     color: #667383;
 
-    margin-bottom: 18px;
+    margin-bottom: 20px;
 }
 
 
@@ -1052,15 +1049,11 @@ nav a.active::after {
 
 
 .project-content > p {
-    max-width: 500px;
-
-    font-size: 15px;
-
+    max-width: 520px;
+    font-size: 17px;
     line-height: 1.75;
-
     color: var(--muted);
-
-    margin-bottom: 35px;
+    margin-bottom: 38px;
 }
 
 
@@ -1083,7 +1076,7 @@ nav a.active::after {
 
 
 .project-meta div {
-    font-size: 12px;
+    font-size: 13px;
     color: var(--text);
     line-height: 1.6;
 }
@@ -1092,7 +1085,7 @@ nav a.active::after {
 .project-meta span {
     display: block;
 
-    font-size: 9px;
+    font-size: 10px;
     font-weight: 600;
 
     letter-spacing: 2px;
@@ -1116,7 +1109,7 @@ nav a.active::after {
 
     width: fit-content;
 
-    font-size: 11px;
+    font-size: 12px;
 
     font-weight: 600;
 
@@ -1262,7 +1255,7 @@ nav a.active::after {
     width: 125px;
     height: 125px;
 
-    border: 1px solid rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.25);
 
     display: flex;
 
