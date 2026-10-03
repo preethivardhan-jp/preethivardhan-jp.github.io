@@ -1262,7 +1262,7 @@ nav a.active::after {
     width: 125px;
     height: 125px;
 
-    border: 1px solid rgba(255, 255, 255, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.5);
 
     display: flex;
 
