@@ -91,7 +91,7 @@ header {
 
     border-bottom: 1px solid var(--line);
 
-    background: rgba(248, 249, 250, 0.92);
+    background: rgba(248, 249, 250, 0.78);
 
     position: sticky;
     top: 0;
@@ -247,7 +247,7 @@ nav a.active::after {
 .hero {
     min-height: calc(100vh - 100px);
 
-    padding: 05px 5.5% 0;
+    padding: 5px 5.5% 0;
 
     display: grid;
 
@@ -501,7 +501,7 @@ nav a.active::after {
 
     text-transform: uppercase;
     
-    margin-bottom: 16px
+    margin-bottom: 16px;
 }
 
 
